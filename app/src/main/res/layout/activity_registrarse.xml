@@ -97,11 +97,7 @@
             android:onClick="registrarUsuario"
             android:text="@string/Btn_Registrarse" />
 
-        <Button
-            android:id="@+id/btnRecordarClave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Recordar Clave" />
+
 
     </LinearLayout>
 

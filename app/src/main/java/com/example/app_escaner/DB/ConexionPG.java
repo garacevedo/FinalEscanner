@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.example.app_escaner.ConsultaCiudadano;
 import com.example.app_escaner.R;
 import com.example.app_escaner.entidades.Ciudadanos;
+import com.example.app_escaner.entidades.FuerzaPublica;
 
 import java.security.SecureRandom;
 import java.sql.*;
@@ -129,11 +130,45 @@ public class ConexionPG {
     }
 
 
-    public String insertarFuerzaPublica(int identificacionFuerza, String nombreFuerza, String apellidoFuerza, String fuerzaPublica, String rango, int idFuerza, String correo) {
+    public FuerzaPublica consultaClaveFuerzaPublica(String correo) {
+
+        FuerzaPublica fuerzaPublica = null;
+
         try {
             Connection connection = connect();
             st = connection.createStatement();
-            String clave = crearClaveFuerzaPublica();
+            String sql = "SELECT id_fuerza_publica, identificacion, clave, login, nombre, apellidos, fuerza_publica, rango, id_fuerza, correo_electronico FROM personal_fuerza_publica where correo_electronico = '"+ correo +"' LIMIT 1;";
+            resultQuery = st.executeQuery(sql);
+            String resultado = "";
+            while (resultQuery.next()) {
+                fuerzaPublica = new FuerzaPublica();
+                fuerzaPublica.setId_fuerza_publica(Integer.parseInt(resultQuery.getString("id_fuerza_publica")));
+                fuerzaPublica.setIdentificacion(Integer.parseInt(resultQuery.getString("identificacion")));
+                fuerzaPublica.setClave(resultQuery.getString("clave"));
+                fuerzaPublica.setLogin(Integer.parseInt(resultQuery.getString("login")));
+                fuerzaPublica.setNombre(resultQuery.getString("nombre"));
+                fuerzaPublica.setApellidos(resultQuery.getString("apellidos"));
+                fuerzaPublica.setFuerza_publica(resultQuery.getString("fuerza_publica"));
+                fuerzaPublica.setRango(resultQuery.getString("rango"));
+                fuerzaPublica.setId_fuerza(Integer.parseInt(resultQuery.getString("id_fuerza")));
+                fuerzaPublica.setCorreo_electronico(resultQuery.getString("correo_electronico"));
+            }
+            st.close();
+            close_conexion(connection);
+        } catch (Exception e) {
+            System.out.println("Errrrrrrrrrrrrrrrrrrrrrrrrrrrooooooooooooooooooooorrrrrrrrrrrrrrrrrrrr");
+        }
+        return fuerzaPublica;
+    }
+
+
+    public String[] insertarFuerzaPublica(int identificacionFuerza, String nombreFuerza, String apellidoFuerza, String fuerzaPublica, String rango, int idFuerza, String correo) {
+        String respuesta[] = new String[2] ;
+        String clave = crearClaveFuerzaPublica();
+        try {
+            Connection connection = connect();
+            st = connection.createStatement();
+
             System.out.println("Claveeeeeeeeeeeeeeeeeeeeeeee");
             System.out.println(clave);
             String sql = "insert into personal_fuerza_publica (identificacion, clave, login, nombre, apellidos, fuerza_publica, rango, id_fuerza, correo_electronico) " +
@@ -144,10 +179,14 @@ public class ConexionPG {
             st.close();
             close_conexion(connection);
             System.out.println("Se registro correctamente la fuerza pública.");
-            return "Se registro correctamente la fuerza pública";
+            respuesta[0] = "Se registro correctamente la fuerza pública";
+            respuesta[1] = clave;
+            return respuesta;
         } catch (Exception e) {
             System.out.println("Falla: en la inserción de datos."+  e.getMessage()+ ".\n  Vuelva a intentar" );
-            return "Falla: en la inserción de datos."+  e.getMessage()+ ".\n  Vuelva a intentar";
+            respuesta[0] = "Falla: en la inserción de datos."+  e.getMessage()+ ".\n  Vuelva a intentar";
+            respuesta[1] = clave;
+            return respuesta;
         }
 
     }
