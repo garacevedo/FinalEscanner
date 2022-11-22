@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">App_escaner</string>
+    <string name="hint_identificacion">Identificación:</string>
+    <string name="hint_nombres">Nombre:</string>
+    <string name="hint_apellidos">Apellidos:</string>
+    <string name="hint_fecha_nacimiento">Fecha de nacimiento:</string>
+    <string name="hint_rh">Rh:</string>
+    <string name="hint_grupo_sanguineo">Grupo Sanguíneo:</string>
+    <string name="hint_sexo">Genero:</string>
+    <string name="hint_requerido">Requerido:</string>
+
+    <string name="Btn_iniciar_Pantalla">Iniciar Sesion</string>
+    <string name="Btn_registrar">Registrar</string>
+
+    <string name="Btn_IniciarSesion">Iniciar</string>
+
+    <string name="Btn_Registrarse">Registrarse</string>
+
+</resources>

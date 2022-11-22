@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "912421680469",
+    "project_id": "fuerza-publica",
+    "storage_bucket": "fuerza-publica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912421680469:android:553fdbefd9e7c6b21eabdc",
+        "android_client_info": {
+          "package_name": "com.example.app_escaner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912421680469-ttcimtfolukjlurohd18nbr0g6oc012r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrqJJuJ99igDaoPablpcbK5tsXv2kvFzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912421680469-ttcimtfolukjlurohd18nbr0g6oc012r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912421680469:android:0ee9fca141633a851eabdc",
+        "android_client_info": {
+          "package_name": "com.example.proyecto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912421680469-ttcimtfolukjlurohd18nbr0g6oc012r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrqJJuJ99igDaoPablpcbK5tsXv2kvFzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912421680469-ttcimtfolukjlurohd18nbr0g6oc012r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
