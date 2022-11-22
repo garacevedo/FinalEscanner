@@ -18,8 +18,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.726">
 
+
         <EditText
-            android:id="@+id/Nombre"
+            android:id="@+id/txtIdentificacionFuerza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:text="Identificación" />
+
+        <EditText
+            android:id="@+id/txtNombreFuerza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -28,7 +38,7 @@
             android:text="Nombre" />
 
         <EditText
-            android:id="@+id/Apellido"
+            android:id="@+id/txtApellidoFuerza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -37,7 +47,7 @@
             android:text="Apellidos" />
 
         <EditText
-            android:id="@+id/FuerzaPublica"
+            android:id="@+id/txtFuerzaPublica"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -46,7 +56,7 @@
             android:text="Fuerza Pública" />
 
         <EditText
-            android:id="@+id/Rango"
+            android:id="@+id/txtRango"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -55,7 +65,7 @@
             android:text="Rango" />
 
         <EditText
-            android:id="@+id/IDFuerza"
+            android:id="@+id/txtIdFuerza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -64,38 +74,35 @@
             android:text="Ingrese Id Fuerza" />
 
         <EditText
-            android:id="@+id/Correo1"
+            android:id="@+id/txtCorreo1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="correo" />
+            android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/contrasena"
+        <!--<EditText
+            android:id="@+id/txtClave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <EditText
-            android:id="@+id/Confirmarcontrasena"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck" />-->
 
         <Button
-            android:id="@+id/Registar_btn"
+            android:id="@+id/btnRegistarFuerza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="registrarUsuario"
             android:text="@string/Btn_Registrarse" />
+
+        <Button
+            android:id="@+id/btnRecordarClave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recordar Clave" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import com.example.app_escaner.ConsultaCiudadano;
 import com.example.app_escaner.R;
 import com.example.app_escaner.entidades.Ciudadanos;
 
+import java.security.SecureRandom;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -128,6 +129,46 @@ public class ConexionPG {
     }
 
 
+    public String insertarFuerzaPublica(int identificacionFuerza, String nombreFuerza, String apellidoFuerza, String fuerzaPublica, String rango, int idFuerza, String correo) {
+        try {
+            Connection connection = connect();
+            st = connection.createStatement();
+            String clave = crearClaveFuerzaPublica();
+            System.out.println("Claveeeeeeeeeeeeeeeeeeeeeeee");
+            System.out.println(clave);
+            String sql = "insert into personal_fuerza_publica (identificacion, clave, login, nombre, apellidos, fuerza_publica, rango, id_fuerza, correo_electronico) " +
+                    "values ("+ identificacionFuerza +", '"+clave+"', "+ 0 + ", '" + nombreFuerza +"', '" + apellidoFuerza + "', '"+ fuerzaPublica + "', '" + rango +"', "+ idFuerza + ", '" + correo +"') ";
+            System.out.println("Consulta a base sde datossssssssssss");
+            System.out.println(sql);
+            st.executeUpdate(sql);
+            st.close();
+            close_conexion(connection);
+            System.out.println("Se registro correctamente la fuerza pública.");
+            return "Se registro correctamente la fuerza pública";
+        } catch (Exception e) {
+            System.out.println("Falla: en la inserción de datos."+  e.getMessage()+ ".\n  Vuelva a intentar" );
+            return "Falla: en la inserción de datos."+  e.getMessage()+ ".\n  Vuelva a intentar";
+        }
+
+    }
+
+    public String crearClaveFuerzaPublica(){
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-*/$%&/()";
+
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+
+        // cada iteración del bucle elige aleatoriamente un carácter del dado
+        // rango ASCII y lo agrega a la instancia `StringBuilder`
+
+        for (int i = 0; i < 9; i++)
+        {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+
+        return sb.toString();
+    }
 
     //int numero_identificacion, String nombre, String apellidos, String fecha_nacimento, String rh, String grupo_sanguineo, String sexo, String requerido
     public String insertarCiudadano(int numero_identificacion, String nombres, String apellidos, String fechaNacimento, char grupoSanguineo, char rh, String sexo, String requerido) {

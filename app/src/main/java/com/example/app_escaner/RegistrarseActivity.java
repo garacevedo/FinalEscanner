@@ -3,12 +3,14 @@ package com.example.app_escaner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app_escaner.DB.ConexionPG;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,16 +20,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegistrarseActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    public static ConexionPG bd = new ConexionPG();
 
     // Initialize Firebase Auth
-    private EditText Nombre;
-    private EditText Apellido;
-    private EditText Fuerzapublica;
-    private EditText Rango;
-    private EditText IDFuerza;
-    private EditText correo;
-    private EditText contrasena;
-    private EditText confirmarcontrasena;
+    EditText txtIdentificacionFuerza, txtNombreFuerza, txtApellidoFuerza, txtFuerzaPublica, txtRango, txtIdFuerza, txtCorreo1;
+    Button btnRegistarFuerza, btnRecordarClave;
 
 
     @Override
@@ -38,17 +35,54 @@ public class RegistrarseActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        Nombre = findViewById(R.id.Nombre);
-        Apellido = findViewById(R.id.Apellido);
-        Fuerzapublica = findViewById(R.id.FuerzaPublica);
-        Rango = findViewById(R.id.Rango);
-        IDFuerza = findViewById(R.id.IDFuerza);
-        correo = findViewById(R.id.Correo1);
-        contrasena = findViewById(R.id.contrasena);
-        confirmarcontrasena = findViewById(R.id.Confirmarcontrasena);
+        txtIdentificacionFuerza = findViewById(R.id.txtIdentificacionFuerza);
+        txtNombreFuerza = findViewById(R.id.txtNombreFuerza);
+        txtApellidoFuerza = findViewById(R.id.txtApellidoFuerza);
+        txtFuerzaPublica = findViewById(R.id.txtFuerzaPublica);
+        txtRango = findViewById(R.id.txtRango);
+        txtIdFuerza = findViewById(R.id.txtIdFuerza);
+        txtCorreo1 = findViewById(R.id.txtCorreo1);
+        btnRegistarFuerza = findViewById(R.id.btnRegistarFuerza);
+        btnRecordarClave = findViewById(R.id.btnRecordarClave);
+
+        btnRegistarFuerza.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bd.Database();
+                String message = bd.insertarFuerzaPublica(Integer.parseInt(txtIdentificacionFuerza.getText().toString()), txtNombreFuerza.getText().toString(),
+                        txtApellidoFuerza.getText().toString(),txtFuerzaPublica.getText().toString(),
+                        txtRango.getText().toString(),Integer.parseInt(txtIdFuerza.getText().toString()),txtCorreo1.getText().toString());
+                if (!message.contains("Falla")){
+                    Toast.makeText(RegistrarseActivity.this, message, Toast.LENGTH_LONG).show();
+                    limpiarCamposRegistro();
+                    mostrarInicio();
+                }else {
+                    Toast.makeText(RegistrarseActivity.this, message, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
     }
+
+    private void limpiarCamposRegistro(){
+        txtIdentificacionFuerza.setText("");
+        txtNombreFuerza.setText("");
+        txtApellidoFuerza.setText("");
+        txtFuerzaPublica.setText("");
+        txtRango.setText("");
+        txtIdFuerza.setText("");
+        txtCorreo1.setText("");
+        btnRegistarFuerza.setText("");
+        btnRecordarClave.setText("");
+    }
+
+    public void mostrarInicio(){
+        Intent intent = new Intent(this, Inicio.class);
+        startActivity(intent);
+    }
+
+    /*
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -96,6 +130,6 @@ public class RegistrarseActivity extends AppCompatActivity {
 
 
 
-    }
+    }*/
 
 }
