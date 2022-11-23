@@ -129,6 +129,37 @@ public class ConexionPG {
         return ciudadano;
     }
 
+    public boolean consultaIdentidadCiudadanos(int id) {
+
+
+        try {
+            int cont = 0;
+            Connection connection = connect();
+            st = connection.createStatement();
+            String sql = "SELECT id_ciudadano, numero_identificacion, nombre FROM ciudadanos where numero_identificacion = "+ id +" LIMIT 1;";
+            resultQuery = st.executeQuery(sql);
+            String resultado = "";
+            while (resultQuery.next()) {
+                cont ++;
+                System.out.println("///////////////////////////////////////////////////////////");
+                System.out.println(Integer.parseInt(resultQuery.getString("id_ciudadano")));
+                System.out.println(Integer.parseInt(resultQuery.getString("numero_identificacion")));
+            }
+            if (cont == 0){
+                st.close();
+                close_conexion(connection);
+                return true;
+            }
+            st.close();
+            close_conexion(connection);
+            return false;
+        } catch (Exception e) {
+            System.out.println("Errrrrrrrrrrrrrrrrrrrrrrrrrrrooooooooooooooooooooorrrrrrrrrrrrrrrrrrrr");
+            return false;
+        }
+
+    }
+
 
     public FuerzaPublica consultaClaveFuerzaPublica(String correo) {
 

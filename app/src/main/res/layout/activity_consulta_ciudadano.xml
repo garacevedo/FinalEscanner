@@ -18,15 +18,14 @@
 
     </SearchView>
 
-    <CheckBox
-        android:id="@+id/chkBxNoRequerido"
+    <Button
+        android:id="@+id/btnDescargaReporte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:text="DESCARGAR REPORTE"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txtBuscar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recicler"
@@ -36,9 +35,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chkBxNoRequerido"
+        app:layout_constraintTop_toBottomOf="@+id/btnDescargaReporte"
         app:layout_constraintVertical_bias="0.968"
         tools:listitem="@layout/lista_item_ciudadano" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

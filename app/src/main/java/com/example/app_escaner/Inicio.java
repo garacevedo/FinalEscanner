@@ -130,19 +130,38 @@ public class Inicio extends AppCompatActivity {
                         System.out.println(Arrays.toString(Filtro1));
                         System.out.println(Arrays.toString(Filtro2));
                         System.out.println(scanContent);
+                        boolean res;
                         if (contador == 10) {
-                            txtResultado.setText("Cedula1: " + scanContent.substring(17, scanContent.length()));
-                            processDataFromScanner(list3, scanContent.substring(17, scanContent.length()).trim());
+                            res = verificarDocumentoIdentidad(scanContent.substring(17, scanContent.length()));
+                            if (res) {
+                                txtResultado.setText("Ciudadadano consultado: " + scanContent.substring(17, scanContent.length()));
+                                Toast.makeText(this, "Ver en CONSUTLAR CIUDADANOS PARA VERIFICAR.", Toast.LENGTH_LONG).show();
+                                processDataFromScanner(list3, scanContent.substring(17, scanContent.length()).trim());
+                            } else {
+                                txtResultado.setText("El ciduadano ya fue consultado anteriormente: " + scanContent.substring(17, scanContent.length()));
+                            }
                         } else {
                             if (contador == 9) {
-                                txtResultado.setText("Cedula2: " + scanContent.substring(19, scanContent.length()));
-                                processDataFromScanner(list3, scanContent.substring(19, scanContent.length()).trim());
+                                res = verificarDocumentoIdentidad(scanContent.substring(17, scanContent.length()));
+                                if (res) {
+                                    txtResultado.setText("Ciudadadano consultado: " + scanContent.substring(19, scanContent.length()));
+                                    processDataFromScanner(list3, scanContent.substring(19, scanContent.length()).trim());
+                                    Toast.makeText(this, "Ver en CONSUTLAR CIUDADANOS PARA VERIFICAR.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    txtResultado.setText("El ciduadano ya fue consultado anteriormente: " + scanContent.substring(17, scanContent.length()));
+                                }
                             } else {
                                 if (contador == 0) {
-                                    txtResultado.setText("Cedula3: " + scanContent.substring(17, scanContent.length()));
-                                    processDataFromScanner(list3, scanContent.substring(17, scanContent.length()).trim());
+                                    res = verificarDocumentoIdentidad(scanContent.substring(17, scanContent.length()));
+                                    if (res) {
+                                        txtResultado.setText("Ciudadadano consultado: " + scanContent.substring(17, scanContent.length()));
+                                        processDataFromScanner(list3, scanContent.substring(17, scanContent.length()).trim());
+                                        Toast.makeText(this, "Ver en CONSUTLAR CIUDADANOS PARA VERIFICAR.", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        txtResultado.setText("El ciduadano ya fue consultado anteriormente: " + scanContent.substring(17, scanContent.length()));
+                                    }
                                 } else {
-                                    txtResultado.setText("Cedula" + Integer.toString(contador) + ": No se pudo detectar Correctamente. " + scanContent);
+                                    txtResultado.setText("La cédula" + Integer.toString(contador) + ": No se pudo detectar Correctamente. " + scanContent);
                                 }
                             }
                         }
@@ -163,7 +182,14 @@ public class Inicio extends AppCompatActivity {
 
     }
 
+    public boolean verificarDocumentoIdentidad(String documento_identidad) {
+        bd.Database();
+        boolean res = bd.consultaIdentidadCiudadanos(Integer.parseInt(documento_identidad));
+        return res;
+    }
+
     public void processDataFromScanner(ArrayList<String> list, String documento_identidad) {
+
         bd.Database();
         System.out.println("qqqqqqqqqqqqqqqqqqqqq " + documento_identidad.trim());
 
@@ -223,7 +249,7 @@ public class Inicio extends AppCompatActivity {
         System.out.println(requerido);
 
         String message = bd.insertarCiudadano(numero_identificacion, nombres, apellidos, fechaNacimento, grupoSanguineo, rh, sexo, requerido);
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
     }
 }
