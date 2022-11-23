@@ -193,9 +193,9 @@ public class ConexionPG {
     }
 
 
-    public String[] insertarFuerzaPublica(int identificacionFuerza, String nombreFuerza, String apellidoFuerza, String fuerzaPublica, String rango, int idFuerza, String correo) {
+    public String[] insertarFuerzaPublica(String fuerzaPublica, String clave, String correo) {
         String respuesta[] = new String[2] ;
-        String clave = crearClaveFuerzaPublica();
+        String clave2 = crearClaveFuerzaPublica();
         try {
             Connection connection = connect();
             st = connection.createStatement();
@@ -203,7 +203,7 @@ public class ConexionPG {
             System.out.println("Claveeeeeeeeeeeeeeeeeeeeeeee");
             System.out.println(clave);
             String sql = "insert into personal_fuerza_publica (identificacion, clave, login, nombre, apellidos, fuerza_publica, rango, id_fuerza, correo_electronico) " +
-                    "values ("+ identificacionFuerza +", '"+clave+"', "+ 0 + ", '" + nombreFuerza +"', '" + apellidoFuerza + "', '"+ fuerzaPublica + "', '" + rango +"', "+ idFuerza + ", '" + correo +"') ";
+                    "values (0, '" + clave +"', 0, '', '', '" +fuerzaPublica + "', '', 0, '"+ correo +"' )";
             System.out.println("Consulta a base sde datossssssssssss");
             System.out.println(sql);
             st.executeUpdate(sql);
@@ -211,12 +211,12 @@ public class ConexionPG {
             close_conexion(connection);
             System.out.println("Se registro correctamente la fuerza pública.");
             respuesta[0] = "Se registro correctamente la fuerza pública";
-            respuesta[1] = clave;
+            respuesta[1] = clave2;
             return respuesta;
         } catch (Exception e) {
             System.out.println("Falla: en la inserción de datos."+  e.getMessage()+ ".\n  Vuelva a intentar" );
             respuesta[0] = "Falla: en la inserción de datos."+  e.getMessage()+ ".\n  Vuelva a intentar";
-            respuesta[1] = clave;
+            respuesta[1] = clave2;
             return respuesta;
         }
 

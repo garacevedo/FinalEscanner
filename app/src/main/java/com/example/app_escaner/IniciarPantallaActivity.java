@@ -44,41 +44,43 @@ public class IniciarPantallaActivity extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_iniciar_pantalla);
 
-        txtCorreo = findViewById(R.id.txtCorreo);
-        contrasena = findViewById(R.id.contrasena);
-        mAuth = FirebaseAuth.getInstance();
-        btnRecordarClave = findViewById(R.id.btnRecordarClave);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_iniciar_pantalla);
 
-        btnRecordarClave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            txtCorreo = findViewById(R.id.txtCorreo);
+            contrasena = findViewById(R.id.contrasena);
+            mAuth = FirebaseAuth.getInstance();
+            btnRecordarClave = findViewById(R.id.btnRecordarClave);
 
-                if (!txtCorreo.getText().toString().equals("")) {
-                    bd.Database();
-                    fuerzaPublica = bd.consultaClaveFuerzaPublica(txtCorreo.getText().toString().trim());
-                    String from = "alfonso083.santi@gmail.com";
-                    String pass = "picqdysxscgztrui";
-                    System.out.println("correeeeeeeeeeeeo");
-                    System.out.println("w" + txtCorreo.getText().toString() + "e");
-                    String[] to = {txtCorreo.getText().toString().trim()}; // list of recipient email addresses
-                    String subject = "Recordar Contraseña App_Escaner";
-                    String body = "Hola Estimad@ " + fuerzaPublica.getNombre() + ",\n" +
-                            "No te olvides de la contraseña de la aplicación App_Escaner:\n\n" +
-                            fuerzaPublica.getClave() + "\n" +
-                            "\nAtentamente,\n" +
-                            "Equipo de App_Escaner.";
-                    sendFromGMail(from, pass, to, subject, body);
-                    Toast.makeText(IniciarPantallaActivity.this, "Enviando correo con la contraseña...", Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(IniciarPantallaActivity.this, "Debe ingresar pro lo menos el correo para habilitar esta opción.", Toast.LENGTH_LONG).show();
+            btnRecordarClave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (!txtCorreo.getText().toString().equals("")) {
+                        bd.Database();
+                        fuerzaPublica = bd.consultaClaveFuerzaPublica(txtCorreo.getText().toString().trim());
+                        String from = "alfonso083.santi@gmail.com";
+                        String pass = "picqdysxscgztrui";
+                        System.out.println("correeeeeeeeeeeeo");
+                        System.out.println("w" + txtCorreo.getText().toString() + "e");
+                        String[] to = {txtCorreo.getText().toString().trim()}; // list of recipient email addresses
+                        String subject = "Recordar Contraseña App_Escaner";
+                        String body = "Hola Estimad@ " + fuerzaPublica.getNombre() + ",\n" +
+                                "No te olvides de la contraseña de la aplicación App_Escaner:\n\n" +
+                                fuerzaPublica.getClave() + "\n" +
+                                "\nAtentamente,\n" +
+                                "Equipo de App_Escaner.";
+                        sendFromGMail(from, pass, to, subject, body);
+                        Toast.makeText(IniciarPantallaActivity.this, "Enviando correo con la contraseña...", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(IniciarPantallaActivity.this, "Debe ingresar pro lo menos el correo para habilitar esta opción.", Toast.LENGTH_LONG).show();
+                    }
+
                 }
-
-            }
-        });
+            });
     }
+
 
     private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
         Properties props = System.getProperties();
@@ -141,7 +143,7 @@ public class IniciarPantallaActivity extends AppCompatActivity {
     public void IniciarSesion(View view) {
 
 
-        mAuth.signInWithEmailAndPassword(txtCorreo.getText().toString(), contrasena.getText().toString())
+        mAuth.signInWithEmailAndPassword(txtCorreo.getText().toString().trim(), contrasena.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -150,8 +152,9 @@ public class IniciarPantallaActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent i = new Intent(getApplicationContext(),Inicio.class);
                             startActivity(i);
+
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

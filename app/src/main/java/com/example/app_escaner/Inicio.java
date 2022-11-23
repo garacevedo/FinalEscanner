@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.app_escaner.DB.ConexionPG;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -22,7 +23,7 @@ public class Inicio extends AppCompatActivity {
 
     Button btnScan;
     EditText txtResultado;
-    Button btnConsultarCiudadanos;
+    Button btnConsultarCiudadanos,btn_cerrar;
     public static ConexionPG bd = new ConexionPG();
 
 
@@ -33,6 +34,7 @@ public class Inicio extends AppCompatActivity {
 
         btnScan = findViewById(R.id.btnScan);
         txtResultado = findViewById(R.id.txtResultado);
+        btn_cerrar = findViewById(R.id.btn_cerrar);
         btnConsultarCiudadanos = findViewById(R.id.btnConsultarCiudadanos);
 
         btnScan.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +55,16 @@ public class Inicio extends AppCompatActivity {
             public void onClick(View view) {
                 Intent btnConsultarCiudadanos = new Intent(Inicio.this, ConsultaCiudadano.class);
                 startActivity(btnConsultarCiudadanos);
+            }
+        });
+        btn_cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Se cerro sesion correctamente",
+                        Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Intent btn_cerrar = new Intent(Inicio.this, MainActivity.class);
+                startActivity(btn_cerrar);
             }
         });
     }
@@ -134,7 +146,7 @@ public class Inicio extends AppCompatActivity {
                         if (contador == 10) {
                             res = verificarDocumentoIdentidad(scanContent.substring(17, scanContent.length()));
                             if (res) {
-                                txtResultado.setText("Ciudadadano consultado: " + scanContent.substring(17, scanContent.length()));
+                                txtResultado.setText("El ciudadadano : " + scanContent.substring(17, scanContent.length()) + " No es requerido.");
                                 Toast.makeText(this, "Ver en CONSUTLAR CIUDADANOS PARA VERIFICAR.", Toast.LENGTH_LONG).show();
                                 processDataFromScanner(list3, scanContent.substring(17, scanContent.length()).trim());
                             } else {
@@ -144,7 +156,7 @@ public class Inicio extends AppCompatActivity {
                             if (contador == 9) {
                                 res = verificarDocumentoIdentidad(scanContent.substring(17, scanContent.length()));
                                 if (res) {
-                                    txtResultado.setText("Ciudadadano consultado: " + scanContent.substring(19, scanContent.length()));
+                                    txtResultado.setText("El ciudadadano : " + scanContent.substring(19, scanContent.length()) + " No es requerido.");
                                     processDataFromScanner(list3, scanContent.substring(19, scanContent.length()).trim());
                                     Toast.makeText(this, "Ver en CONSUTLAR CIUDADANOS PARA VERIFICAR.", Toast.LENGTH_LONG).show();
                                 } else {
@@ -154,7 +166,7 @@ public class Inicio extends AppCompatActivity {
                                 if (contador == 0) {
                                     res = verificarDocumentoIdentidad(scanContent.substring(17, scanContent.length()));
                                     if (res) {
-                                        txtResultado.setText("Ciudadadano consultado: " + scanContent.substring(17, scanContent.length()));
+                                        txtResultado.setText("El ciudadadano : " + scanContent.substring(17, scanContent.length()) + " No es requerido.");
                                         processDataFromScanner(list3, scanContent.substring(17, scanContent.length()).trim());
                                         Toast.makeText(this, "Ver en CONSUTLAR CIUDADANOS PARA VERIFICAR.", Toast.LENGTH_LONG).show();
                                     } else {

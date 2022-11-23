@@ -34,12 +34,154 @@ public class RegistrarseActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public static ConexionPG bd = new ConexionPG();
 
-    // Initialize Firebase Auth
-    EditText txtIdentificacionFuerza, txtNombreFuerza, txtApellidoFuerza, txtFuerzaPublica, txtRango, txtIdFuerza, txtCorreo1;
-    Button btnRegistarFuerza;
+    private EditText correo;
+    private EditText identificacion;
+    public String contrasena;
+
 
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registrarse);
+
+
+        mAuth = FirebaseAuth.getInstance();
+        identificacion = findViewById(R.id.txtFuerzaPublica);
+        correo = findViewById(R.id.txtCorreo1);
+
+
+    }
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
+    }
+    public void registrarUsuario(View view) {
+        bd.Database();
+
+        contrasena = bd.crearClaveFuerzaPublica();
+        String from = "alfonso083.santi@gmail.com";
+        String pass = "picqdysxscgztrui";
+        System.out.println("correeeeeeeeeeeeo");
+        System.out.println("w" + correo.getText().toString() + "e");
+        String[] to = {correo.getText().toString().trim()}; // list of recipient email addresses
+        String subject = "Contraseña App_Escaner de Fuerza Pública";
+        String body = "Hola Estimad@ " + correo.getText().toString().trim() + ",\n" +
+                "Muchas gracias por registrarte al la aplicación App_Escaner.\n\n" +
+                "Enviamos tú contraseña para iniciar sesión de ahora en adelante: " + contrasena + "\n" +
+                "Si en algún momento no recuerdas la contraseña, puedes dar clic al botón de RECORDAR CLAVE al momento de iniciar sesión y te llegará un correo electrónico con la contraseña.\n" +
+                "\n\nAtentamente,\n" +
+                "Equipo de App_Escaner.";
+        sendFromGMail(from, pass, to, subject, body);
+
+        mAuth.createUserWithEmailAndPassword(correo.getText().toString(), contrasena)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            bd.Database();
+                            String message[] = bd.insertarFuerzaPublica(identificacion.getText().toString(), contrasena,  correo.getText().toString());
+
+
+                            Toast.makeText(getApplicationContext(), "Se registro correctamente",
+                                    Toast.LENGTH_SHORT).show();
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(i);
+
+
+
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+
+                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
+    }
+    private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+
+        props.put("mail.smtp.starttls.enable", "true");
+
+        props.put("mail.smtp.ssl.trust", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");//587, 465
+        props.put("mail.smtp.auth", "true");
+
+
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
+
+        try {
+
+
+            message.setFrom(new InternetAddress(from));
+            InternetAddress[] toAddress = new InternetAddress[to.length];
+
+            // To get the array of addresses
+            for( int i = 0; i < to.length; i++ ) {
+                toAddress[i] = new InternetAddress(to[i]);
+            }
+
+            for( int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+
+
+
+
+            message.setSubject(subject);
+            message.setText(body);
+
+
+            Transport transport = session.getTransport("smtp");
+
+
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+
+        }
+        catch (AddressException ae) {
+            ae.printStackTrace();
+        }
+        catch (MessagingException me) {
+            me.printStackTrace();
+        }
+    }
+    private void sendMail(String clave){
+
+        String email = correo.getText().toString().trim();
+        String asunto = "CONTRASEÑA NUEVA";
+        String contenido = "Hola estimado usuario!\n" +
+                "Esta es tu contraseña de acceso: " + clave ;
+
+        JavaMailAPI javaMailAPI = new JavaMailAPI(this, email, asunto, contenido);
+        javaMailAPI.execute();
+    }
+
+
+
+
+
+
+
+
+
+
+}
+
+
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrarse);
@@ -64,6 +206,7 @@ public class RegistrarseActivity extends AppCompatActivity {
                 String message[] = bd.insertarFuerzaPublica(Integer.parseInt(txtIdentificacionFuerza.getText().toString()), txtNombreFuerza.getText().toString(),
                         txtApellidoFuerza.getText().toString(),txtFuerzaPublica.getText().toString(),
                         txtRango.getText().toString(),Integer.parseInt(txtIdFuerza.getText().toString()),txtCorreo1.getText().toString());
+
                 System.out.println(txtCorreo1.getText().toString());
                 if (!message[0].contains("Falla")){
                     Toast.makeText(RegistrarseActivity.this, message[0], Toast.LENGTH_LONG).show();
@@ -94,6 +237,41 @@ public class RegistrarseActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
+    }
+
+
+    public void registrarUsuario(View view){
+
+
+
+        mAuth.createUserWithEmailAndPassword(txtCorreo1.getText().toString(),txtIdentificacionFuerza.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Se registro correctamente",
+                                    Toast.LENGTH_SHORT).show();
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(i);
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+
+                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
 
     }
 
@@ -127,6 +305,7 @@ public class RegistrarseActivity extends AppCompatActivity {
             for( int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
+
 
 
 
@@ -178,55 +357,8 @@ public class RegistrarseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
-    }
 
 
-    public void registrarUsuario(View view){
-
-        if(contrasena.getText().toString().equals(confirmarcontrasena.getText().toString())){
-
-            mAuth.createUserWithEmailAndPassword(correo.getText().toString(),contrasena.getText().toString())
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Se registro correctamente",
-                                        Toast.LENGTH_SHORT).show();
-                                // Sign in success, update UI with the signed-in user's information
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                                startActivity(i);
-                                //updateUI(user);
-                            } else {
-                                // If sign in fails, display a message to the user.
-
-                                Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
-                            }
-                        }
-                    });
-
-
-
-
-
-
-        }else{
-
-            Toast.makeText(this, "Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
-        }
-
-
-
-
-    }*/
 
                         /*Properties props = new Properties();
 
@@ -263,6 +395,5 @@ public class RegistrarseActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }*/
 
-}
 
-// picqdysxscgztrui
+

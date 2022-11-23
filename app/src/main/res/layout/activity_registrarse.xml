@@ -19,32 +19,22 @@
         app:layout_constraintVertical_bias="0.726">
 
 
-        <EditText
-            android:id="@+id/txtIdentificacionFuerza"
+        <!--<EditText
+            android:id="@+id/txtClave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:minHeight="48dp"
-            android:text="Identificación" />
+            tools:ignore="SpeakableTextPresentCheck" />-->
 
         <EditText
-            android:id="@+id/txtNombreFuerza"
+            android:id="@+id/txtCorreo1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="Nombre" />
-
-        <EditText
-            android:id="@+id/txtApellidoFuerza"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="Apellidos" />
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/txtFuerzaPublica"
@@ -54,41 +44,6 @@
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:text="Fuerza Pública" />
-
-        <EditText
-            android:id="@+id/txtRango"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="Rango" />
-
-        <EditText
-            android:id="@+id/txtIdFuerza"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="Ingrese Id Fuerza" />
-
-        <EditText
-            android:id="@+id/txtCorreo1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:minHeight="48dp"
-            android:inputType="textEmailAddress" />
-
-        <!--<EditText
-            android:id="@+id/txtClave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            tools:ignore="SpeakableTextPresentCheck" />-->
 
         <Button
             android:id="@+id/btnRegistarFuerza"

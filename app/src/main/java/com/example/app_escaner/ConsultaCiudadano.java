@@ -127,7 +127,7 @@ public class ConsultaCiudadano extends AppCompatActivity implements SearchView.O
                 tabla.addCell(resultadoConsultaCiudadanos.get(i).getNombre());
                 tabla.addCell(resultadoConsultaCiudadanos.get(i).getApellidos());
                 tabla.addCell(resultadoConsultaCiudadanos.get(i).getFecha_nacimento());
-                tabla.addCell(String.valueOf(resultadoConsultaCiudadanos.get(i).getNumero_identificacion()));
+                tabla.addCell(String.valueOf(resultadoConsultaCiudadanos.get(i).getRh()));
                 tabla.addCell(resultadoConsultaCiudadanos.get(i).getGrupo_sanguineo());
                 tabla.addCell(resultadoConsultaCiudadanos.get(i).getSexo());
                 tabla.addCell(resultadoConsultaCiudadanos.get(i).getRequerido());
@@ -145,14 +145,7 @@ public class ConsultaCiudadano extends AppCompatActivity implements SearchView.O
         }
     }
 
-    public void generarPDF(){
 
-        PdfDocument pdfDocument = new PdfDocument();
-        Paint paint = new Paint();
-        TextPaint titulo = new TextPaint();
-        TextPaint descripcion = new TextPaint();
-
-    }
 
     private boolean checkPermission(){
         int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
